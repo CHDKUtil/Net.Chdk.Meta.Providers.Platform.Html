@@ -14,27 +14,24 @@ namespace Net.Chdk.Meta.Providers.Platform.Html
         {
         }
 
-        protected override IEnumerable<KeyValuePair<string, string>> DoGetPlatforms(Stream stream)
+        protected override IEnumerable<KeyValuePair<string, string>> DoGetPlatforms(TextReader reader)
         {
-            using (var reader = new StreamReader(stream))
+            string line;
+
+            while ((line = reader.ReadLine()) != null && line != "<tr class=h><th>Value</th><th>CameraModelID</th></tr>")
             {
-                string line;
+            }
 
-                while ((line = reader.ReadLine()) != null && line != "<tr class=h><th>Value</th><th>CameraModelID</th></tr>")
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Length > 0)
                 {
-                }
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.Length > 0)
+                    var match = regex.Match(line);
+                    if (match.Success)
                     {
-                        var match = regex.Match(line);
-                        if (match.Success)
-                        {
-                            var modelId = match.Groups[1].Value;
-                            var modelsStr = match.Groups[2].Value;
-                            yield return new KeyValuePair<string, string>(modelId, modelsStr);
-                        }
+                        var modelId = match.Groups[1].Value;
+                        var modelsStr = match.Groups[2].Value;
+                        yield return new KeyValuePair<string, string>(modelId, modelsStr);
                     }
                 }
             }
