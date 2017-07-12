@@ -7,7 +7,7 @@ namespace Net.Chdk.Meta.Providers.Platform.Html
         public static IServiceCollection AddHtmlPlatformProvider(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                .AddSingleton<IPlatformProvider, HtmlPlatformProvider>();
+                .AddSingleton<IInnerPlatformProvider, HtmlPlatformProvider>();
         }
     }
 }

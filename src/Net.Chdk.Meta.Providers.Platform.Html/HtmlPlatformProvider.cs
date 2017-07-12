@@ -1,20 +1,14 @@
-﻿using Net.Chdk.Meta.Generators.Platform;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
 namespace Net.Chdk.Meta.Providers.Platform.Html
 {
-    sealed class HtmlPlatformProvider : PlatformProvider
+    sealed class HtmlPlatformProvider : IInnerPlatformProvider
     {
         private static readonly Regex regex = new Regex("<tr><td class=r>(0x[0-9a-f]+)</td><td>= (.+)</td>$");
 
-        public HtmlPlatformProvider(IPlatformGenerator platformGenerator)
-            : base(platformGenerator)
-        {
-        }
-
-        protected override IEnumerable<KeyValuePair<string, string>> DoGetPlatforms(TextReader reader)
+        public IEnumerable<KeyValuePair<string, string>> GetPlatforms(TextReader reader)
         {
             string line;
 
@@ -36,5 +30,7 @@ namespace Net.Chdk.Meta.Providers.Platform.Html
                 }
             }
         }
+
+        public string Extension => ".html";
     }
 }
