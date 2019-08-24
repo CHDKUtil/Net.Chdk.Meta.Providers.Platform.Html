@@ -12,7 +12,7 @@ namespace Net.Chdk.Meta.Providers.Platform.Html
         {
             string line;
 
-            while ((line = reader.ReadLine()) != null && line != "<tr class=h><th>Value</th><th>CameraModelID</th></tr>")
+            while ((line = reader.ReadLine()) != null && line != "<tr class=h><th>Value</th><th>CanonModelID</th></tr>")
             {
             }
 
